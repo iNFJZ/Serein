@@ -1,0 +1,24 @@
+﻿<section class="workshop">
+    <h2>Join Our Workshop</h2>
+    <div class="workshop-container">
+        <div class="card col-lg-3">
+            <img src="images/workshop/workshop1.png" alt="Workshop 1">
+        </div>
+        <div class="card col-lg-3">
+            <img src="images/workshop/workshop2.png" alt="Workshop 2">
+        </div>
+        <div class="workshop-form col-lg-6">
+            <form method="post" asp-page="/Partials/_Workshop">
+                <input type="text" name="Name" placeholder="Full Name" required>
+                <input type="tel" name="Phone" onkeypress="return isNumberKey(event)" maxlength="10" placeholder="Phone Number" required>
+                <input type="email" name="Email" placeholder="Email" required>
+                <select name="Workshop" required>
+                    <option value="" disabled selected>Select Workshop</option>
+                    <option value="making-candles">Candle Making</option>
+                    <option value="candle-decorating">Candle Decorating</option>
+                </select>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+</section>
