@@ -1,0 +1,56 @@
+﻿@page
+@model RegisterModel
+@{
+    Layout = null;
+    ViewData["Title"] = "Register";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Sereni</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="~/css/Login.css" />
+</head>
+
+<body>
+    <div class="wrapper">
+        <form method="post">
+            <h2 style="text-align:center">Create a new account</h2>
+            @if (ViewData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger" style="text-align:center" role="alert">
+                    @ViewData["ErrorMessage"]
+                </div>
+            }
+            <div class="input-box">
+                <input type="text" asp-for="Input.FullName" placeholder="Full Name" required />
+                <i class="bx bxs-user"></i>
+            </div>
+            <div class="input-box @(ModelState["Input.Email"]?.Errors.Count > 0 ? "has-error" : "")">
+                <input type="email" asp-for="Input.Email" placeholder="Email" required />
+                <i class='bx bx-envelope'></i>
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+            <div class="input-box">
+                <input type="tel" asp-for="Input.PhoneNumber" onkeypress="return isNumberKey(event)" maxlength="10" placeholder="Phone Number" required />
+                <i class='bx bx-phone'></i>
+            </div>
+            <div class="input-box @(ModelState["Input.Password"]?.Errors.Count > 0 ? "has-error" : "")">
+                <input type="password" asp-for="Input.Password" placeholder="Password" required />
+                <i class="bx bxs-lock-alt"></i>
+                <span asp-validation-for="Input.Password" class="text-danger"></span> <!-- Thông báo lỗi cho password -->
+            </div><br />
+            <button type="submit" class="btn">Sign Up</button>
+            <div class="register-link">
+                <p>Already have an account? <a asp-page="/Views/Account/Login">Login</a></p>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
+
+<script src="~/js/main.js"></script>

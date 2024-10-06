@@ -1,13 +1,17 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Sereni.Services.IServices;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Sereni.Pages.Partials
 {
     public class _WorkshopModel : PageModel
     {
-        private readonly EmailService _emailService;
+        private readonly IEmailService _emailService;
 
-        public _WorkshopModel(EmailService emailService)
+        public _WorkshopModel(IEmailService emailService) 
         {
             _emailService = emailService;
         }
@@ -28,8 +32,12 @@ namespace Sereni.Pages.Partials
         {
         }
 
-        public IActionResult OnPost(string Name, string Phone, string Email, string Workshop)
+        public async Task<IActionResult> OnPostAsync() // Thay ??i thành Task<IActionResult>
         {
+            Name = Request.Form["Name"];
+            Workshop = Request.Form["Workshop"];
+            Phone = Request.Form["Phone"];
+            Email = Request.Form["Email"];
             if (!ModelState.IsValid)
             {
                 // Log the model state errors
@@ -46,7 +54,7 @@ namespace Sereni.Pages.Partials
 
             try
             {
-                _emailService.SendEmail(Email, subject, body);
+                await _emailService.SendEmailAsync(Email, subject, body); // S? d?ng await cho ph??ng th?c b?t ??ng b?
                 Console.WriteLine("Email sent successfully.");
             }
             catch (Exception ex)
@@ -59,7 +67,5 @@ namespace Sereni.Pages.Partials
 
             return RedirectToPage("/Index");
         }
-
     }
-
 }
