@@ -408,3 +408,12 @@ function isNumberKey(evt) {
   }
   return true;
 }
+
+document.querySelectorAll('.about-us-item').forEach(item => {
+    item.addEventListener('mouseover', function () {
+        this.style.backgroundColor = '#e0f7fa'; 
+    });
+    item.addEventListener('mouseout', function () {
+        this.style.backgroundColor = 'white';
+    });
+});
