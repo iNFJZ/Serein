@@ -180,8 +180,11 @@
                                             <i class="fa fa-user fa-3x"></i>
                                         </a>
                                         <ul class="dropdown_links">
-                                            <li><a asp-page="/Views/Login">Login</a></li>
-                                            <li><a href="#">Sign In</a></li>
+                                            <li>
+                                                <form method="post" asp-page="/Views/Account/Logout">
+                                                    <button type="submit" class="logout-button">Log Out</button>
+                                                </form>
+                                            </li>
                                         </ul>
                                     </li>
                                     <li class="language">

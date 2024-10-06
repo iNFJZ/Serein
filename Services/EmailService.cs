@@ -1,53 +1,44 @@
-﻿using MailKit.Net.Smtp;
-using MimeKit;
-using Microsoft.Extensions.Options;
-public class EmailSettings
+﻿using Microsoft.Extensions.Options;
+using Sereni.Services.IServices;
+using System.Net.Mail;
+using System.Net;
+using Sereni.Models;
+
+namespace Sereni.Services
 {
-    public string SmtpServer { get; set; }
-    public int Port { get; set; }
-    public string SenderEmail { get; set; }
-    public string SenderName { get; set; }
-    public string Password { get; set; }
-}
-public class EmailService
-{
-    private readonly EmailSettings _emailSettings;
-
-    public EmailService(IOptions<EmailSettings> emailSettings)
+    public class EmailService : IEmailService
     {
-        _emailSettings = emailSettings.Value;
-    }
+        private readonly EmailSettings _emailSettings;
 
-    public void SendEmail(string recipient, string subject, string body)
-    {
-        var emailMessage = new MimeMessage();
-        emailMessage.From.Add(new MailboxAddress(_emailSettings.SenderName, _emailSettings.SenderEmail));
-        emailMessage.To.Add(new MailboxAddress("", recipient));
-        emailMessage.Subject = subject;
-
-        var bodyBuilder = new BodyBuilder
+        public EmailService(IOptions<EmailSettings> emailSettings)
         {
-            HtmlBody = body
-        };
-        emailMessage.Body = bodyBuilder.ToMessageBody();
+            _emailSettings = emailSettings.Value;
+        }
 
-        using (var client = new SmtpClient())
+        public async Task SendEmailAsync(string email, string subject, string message)
         {
-            try
+            using (var client = new SmtpClient())
             {
-                client.Connect(_emailSettings.SmtpServer, _emailSettings.Port, true);
-                client.Authenticate(_emailSettings.SenderEmail, _emailSettings.Password);
+                var credential = new NetworkCredential
+                {
+                    UserName = _emailSettings.Username,
+                    Password = _emailSettings.Password
+                };
 
-                client.Send(emailMessage);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Lỗi khi gửi email: {ex.Message}");
-                throw;
-            }
-            finally
-            {
-                client.Disconnect(true);
+                client.Credentials = credential;
+                client.Host = _emailSettings.MailServer;
+                client.Port = _emailSettings.MailPort;
+                client.EnableSsl = _emailSettings.EnableSSL;
+
+                using (var emailMessage = new MailMessage())
+                {
+                    emailMessage.From = new MailAddress(_emailSettings.SenderEmail, _emailSettings.SenderName);
+                    emailMessage.To.Add(email);
+                    emailMessage.Subject = subject;
+                    emailMessage.Body = message;
+                    emailMessage.IsBodyHtml = true;
+                    await client.SendMailAsync(emailMessage);
+                }
             }
         }
     }
