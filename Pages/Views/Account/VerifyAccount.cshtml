@@ -1,0 +1,19 @@
+﻿@page
+@model Sereni.Pages.Views.Account.VerifyAccountModel
+@{
+    Layout = null;
+    ViewData["Title"] = "Verify Account";
+}
+
+<h2>Verify Account</h2>
+
+<div>
+    @if (Model.IsVerified)
+    {
+        <p>Your account has been verified successfully!</p>
+    }
+    else
+    {
+        <p>Your verification link has expired or is invalid.</p>
+    }
+</div>

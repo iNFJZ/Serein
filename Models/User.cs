@@ -21,6 +21,11 @@ public partial class User
     public string? Role { get; set; }
 
     public string? AvatarUrl { get; set; }
+    public bool IsVerified { get; set; }
+    public string VerificationCode { get; set; } = string.Empty; 
+    public DateTime? VerificationSentAt { get; set; } 
+    public string PasswordResetToken { get; set; } = string.Empty; 
+    public DateTime? PasswordResetSentAt { get; set; }
 
     public virtual ICollection<Customization> Customizations { get; set; } = new List<Customization>();
 
@@ -37,7 +42,6 @@ public partial class User
         return BCrypt.Net.BCrypt.HashPassword(password);
     }
 
-    // Xác minh mật khẩu
     public static bool VerifyPassword(string password, string hashedPassword)
     {
         return BCrypt.Net.BCrypt.Verify(password, hashedPassword);

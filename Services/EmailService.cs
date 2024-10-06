@@ -1,44 +1,41 @@
-﻿using Microsoft.Extensions.Options;
-using Sereni.Services.IServices;
-using System.Net.Mail;
-using System.Net;
-using Sereni.Models;
+﻿using MailKit.Net.Smtp;
+using MimeKit;
+using System.Threading.Tasks;
 
 namespace Sereni.Services
 {
-    public class EmailService : IEmailService
+    public class EmailService
     {
-        private readonly EmailSettings _emailSettings;
+        private readonly string _smtpServer;
+        private readonly int _smtpPort;
+        private readonly string _smtpUser;
+        private readonly string _smtpPass;
 
-        public EmailService(IOptions<EmailSettings> emailSettings)
+        public EmailService(string smtpServer, int smtpPort, string smtpUser, string smtpPass)
         {
-            _emailSettings = emailSettings.Value;
+            _smtpServer = smtpServer;
+            _smtpPort = smtpPort;
+            _smtpUser = smtpUser;
+            _smtpPass = smtpPass;
         }
 
         public async Task SendEmailAsync(string email, string subject, string message)
         {
+            var emailMessage = new MimeMessage();
+            emailMessage.From.Add(new MailboxAddress("Sereni", _smtpUser));
+            emailMessage.To.Add(new MailboxAddress("", email));
+            emailMessage.Subject = subject;
+            emailMessage.Body = new TextPart("html")
+            {
+                Text = message
+            };
+
             using (var client = new SmtpClient())
             {
-                var credential = new NetworkCredential
-                {
-                    UserName = _emailSettings.Username,
-                    Password = _emailSettings.Password
-                };
-
-                client.Credentials = credential;
-                client.Host = _emailSettings.MailServer;
-                client.Port = _emailSettings.MailPort;
-                client.EnableSsl = _emailSettings.EnableSSL;
-
-                using (var emailMessage = new MailMessage())
-                {
-                    emailMessage.From = new MailAddress(_emailSettings.SenderEmail, _emailSettings.SenderName);
-                    emailMessage.To.Add(email);
-                    emailMessage.Subject = subject;
-                    emailMessage.Body = message;
-                    emailMessage.IsBodyHtml = true;
-                    await client.SendMailAsync(emailMessage);
-                }
+                await client.ConnectAsync(_smtpServer, _smtpPort, MailKit.Security.SecureSocketOptions.StartTls);
+                await client.AuthenticateAsync(_smtpUser, _smtpPass);
+                await client.SendAsync(emailMessage);
+                await client.DisconnectAsync(true);
             }
         }
     }
