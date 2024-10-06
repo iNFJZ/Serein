@@ -1,17 +1,20 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Sereni.Models;
+using Sereni.Services;
 using System.ComponentModel.DataAnnotations;
 
 namespace Sereni.Pages.Views.Account
 {
     public class RegisterModel : PageModel
     {
-        private SereniContext _context;
-        public RegisterModel(SereniContext context)
+        private readonly SereniContext _context;
+        private readonly EmailService _emailService;
+        public RegisterModel(SereniContext context, EmailService emailService)
         {
             _context = context;
+            _emailService = emailService;
         }
         [BindProperty]
         public InputModel Input { get; set; }
@@ -67,18 +70,40 @@ namespace Sereni.Pages.Views.Account
             }
 
             var user = new User
-                {
-                    FullName = Input.FullName,
-                    Email = Input.Email,
-                    PhoneNumber = Input.PhoneNumber,
-                    Password = BCrypt.Net.BCrypt.HashPassword(Input.Password),
-                    Role = "customer"
-                };
+            {
+                FullName = Input.FullName,
+                Email = Input.Email,
+                PhoneNumber = Input.PhoneNumber,
+                Password = BCrypt.Net.BCrypt.HashPassword(Input.Password),
+                Role = "customer",
+                VerificationCode = Guid.NewGuid().ToString(),
+                VerificationSentAt = DateTime.UtcNow.AddHours(7)
+            };
 
-                _context.Users.Add(user);
-                await _context.SaveChangesAsync();
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
+
+            if (!string.IsNullOrEmpty(user.VerificationCode))
+            {
+                var verificationLink = Url.Page(
+                    "/Views/Account/VerifyAccount",
+                    null,
+                    new { code = user.VerificationCode },
+                    Request.Scheme);
+
+                await _emailService.SendEmailAsync(Input.Email, "Verify your account",
+                    $"Please confirm your account by clicking this link: <a href='{verificationLink}'>{verificationLink}</a>");
+            }
+            else
+            {
+                // Xử lý trường hợp không có mã xác thực
+                ModelState.AddModelError(string.Empty, "Verification code could not be generated.");
+            }
+
+
+
 
             return RedirectToPage("Login");
         }
-        }
+    }
 }

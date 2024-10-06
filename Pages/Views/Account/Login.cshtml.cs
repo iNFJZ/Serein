@@ -54,6 +54,12 @@ namespace Sereni.Pages.Views.Account
                 return Page();
             }
 
+            if (!user.IsVerified)
+            {
+                ModelState.AddModelError(string.Empty, "Your account is not verified. Please check your email for verification instructions.");
+                return Page();
+            }
+
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, user.FullName ?? Email) 
