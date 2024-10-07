@@ -1,5 +1,5 @@
 ﻿@page
-@model IndexModel
+@model Sereni.Pages.IndexModel
 @{
     Layout = null;
 }
@@ -16,9 +16,8 @@
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css">
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="~/css/style.css">
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true">
 </head>
-
 <body>
     @await Html.PartialAsync("Partials/_Canvars")
 
@@ -26,13 +25,13 @@
 
     @await Html.PartialAsync("Partials/_Slider")
 
-    @await Html.PartialAsync("Partials/_Product")
+    @await Html.PartialAsync("Partials/_AboutUs")
+
+    @await Html.PartialAsync("Partials/_Product", Model.ProductModel)
 
     @await Html.PartialAsync("Partials/_Giftbox")
 
     @await Html.PartialAsync("Partials/_Banner")
-
-    @await Html.PartialAsync("Partials/_AboutUs")
 
     @await Html.PartialAsync("Partials/_BestSeller")
 

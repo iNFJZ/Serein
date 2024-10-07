@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Sereni.Models;
 
@@ -10,8 +11,6 @@ public partial class Candle
     public string? CandleName { get; set; }
 
     public string? Description { get; set; }
-
-    public decimal? Price { get; set; }
 
     public string? BaseColor { get; set; }
 
@@ -28,7 +27,13 @@ public partial class Candle
     public string? ImageUrl { get; set; }
 
     public string? HoverImageUrl { get; set; }
-
+    public decimal Price
+    {
+        get { return SalePrice ?? OriginalPrice ?? 0; } 
+        set {  }
+    }
+    public float? AverageRating { get; set; } = null;
+    public int? StarCount { get; set; } = null;
     public virtual ICollection<CandleCategory> CandleCategories { get; set; } = new List<CandleCategory>();
 
     public virtual ICollection<Customization> Customizations { get; set; } = new List<Customization>();
