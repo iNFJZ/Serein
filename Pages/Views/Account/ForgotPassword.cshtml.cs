@@ -1,18 +1,18 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using Sereni.Models;
-using Sereni.Services;
+using Serein.Models;
+using Serein.Services;
 using System.ComponentModel.DataAnnotations;
 
-namespace Sereni.Pages.Views.Account
+namespace Serein.Pages.Views.Account
 {
     public class ForgotPasswordModel : PageModel
     {
-        private readonly SereniContext _context;
+        private readonly SereinContext _context;
         private readonly EmailService _emailService;
 
-        public ForgotPasswordModel(SereniContext context, EmailService emailService)
+        public ForgotPasswordModel(SereinContext context, EmailService emailService)
         {
             _context = context;
             _emailService = emailService;

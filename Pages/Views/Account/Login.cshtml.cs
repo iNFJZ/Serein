@@ -2,18 +2,18 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Sereni.Models;
+using Serein.Models;
 using System.Linq;
 using System.Security.Claims;
 using System.ComponentModel.DataAnnotations;
 
-namespace Sereni.Pages.Views.Account
+namespace Serein.Pages.Views.Account
 {
     public class LoginModel : PageModel
     {
-        private readonly SereniContext _context;
+        private readonly SereinContext _context;
 
-        public LoginModel(SereniContext context)
+        public LoginModel(SereinContext context)
         {
             _context = context;
         }

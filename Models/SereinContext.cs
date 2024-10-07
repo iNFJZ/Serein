@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
-namespace Sereni.Models;
+namespace Serein.Models;
 
-public partial class SereniContext : DbContext
+public partial class SereinContext : DbContext
 {
-    public SereniContext()
+    public SereinContext()
     {
     }
 
-    public SereniContext(DbContextOptions<SereniContext> options)
+    public SereinContext(DbContextOptions<SereinContext> options)
         : base(options)
     {
     }
@@ -24,6 +24,8 @@ public partial class SereniContext : DbContext
     public virtual DbSet<Coupon> Coupons { get; set; }
 
     public virtual DbSet<Customization> Customizations { get; set; }
+
+    public virtual DbSet<GiftBox> GiftBoxes { get; set; }
 
     public virtual DbSet<Order> Orders { get; set; }
 
@@ -57,6 +59,7 @@ public partial class SereniContext : DbContext
             entity.HasKey(e => e.CandleId).HasName("PK__Candles__502CC3C99B42687B");
 
             entity.Property(e => e.CandleId).HasColumnName("CandleID");
+            entity.Property(e => e.AverageRating).HasDefaultValue(0.0);
             entity.Property(e => e.BaseColor)
                 .HasMaxLength(50)
                 .IsUnicode(false);
@@ -79,6 +82,7 @@ public partial class SereniContext : DbContext
             entity.Property(e => e.Size)
                 .HasMaxLength(50)
                 .IsUnicode(false);
+            entity.Property(e => e.StarCount).HasDefaultValue(0);
         });
 
         modelBuilder.Entity<CandleCategory>(entity =>
@@ -152,6 +156,18 @@ public partial class SereniContext : DbContext
                 .HasConstraintName("FK__Customiza__UserI__5812160E");
         });
 
+        modelBuilder.Entity<GiftBox>(entity =>
+        {
+            entity.HasKey(e => e.GiftBoxId).HasName("PK__GiftBoxe__7E109D4917BFBA1F");
+
+            entity.Property(e => e.GiftBoxId).HasColumnName("GiftBoxID");
+            entity.Property(e => e.GiftBoxName).HasMaxLength(255);
+            entity.Property(e => e.HoverImageUrl).HasMaxLength(255);
+            entity.Property(e => e.ImageName).HasMaxLength(255);
+            entity.Property(e => e.ImageUrl).HasMaxLength(255);
+            entity.Property(e => e.Price).HasColumnType("decimal(10, 2)");
+        });
+
         modelBuilder.Entity<Order>(entity =>
         {
             entity.HasKey(e => e.OrderId).HasName("PK__Orders__C3905BAF2557853E");
@@ -223,6 +239,7 @@ public partial class SereniContext : DbContext
             entity.Property(e => e.ReviewId).HasColumnName("ReviewID");
             entity.Property(e => e.CandleId).HasColumnName("CandleID");
             entity.Property(e => e.Comment).HasColumnType("text");
+            entity.Property(e => e.IsVerifiedPurchase).HasDefaultValue(false);
             entity.Property(e => e.ReviewDate)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");
@@ -306,12 +323,16 @@ public partial class SereniContext : DbContext
             entity.Property(e => e.Password)
                 .HasMaxLength(255)
                 .IsUnicode(false);
+            entity.Property(e => e.PasswordResetSentAt).HasColumnType("datetime");
+            entity.Property(e => e.PasswordResetToken).HasMaxLength(255);
             entity.Property(e => e.PhoneNumber)
                 .HasMaxLength(20)
                 .IsUnicode(false);
             entity.Property(e => e.Role)
                 .HasMaxLength(20)
                 .IsUnicode(false);
+            entity.Property(e => e.VerificationCode).HasMaxLength(255);
+            entity.Property(e => e.VerificationSentAt).HasColumnType("datetime");
         });
 
         modelBuilder.Entity<Wishlist>(entity =>

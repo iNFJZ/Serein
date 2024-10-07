@@ -1,11 +1,11 @@
-using Sereni.Models;
-using Sereni.Services;
+using Serein.Models;
+using Serein.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<SereniContext>(options =>
+builder.Services.AddDbContext<SereinContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DB")));
 
 builder.Services.AddTransient<EmailService>(provider =>

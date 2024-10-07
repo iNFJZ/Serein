@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Sereni.Pages.Views.Account
+namespace Serein.Pages.Views.Account
 {
     public class ForgotPasswordConfirmationModel : PageModel
     {

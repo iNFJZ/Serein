@@ -1,17 +1,17 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using Sereni.Models;
+using Serein.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Sereni.Pages.Partials
+namespace Serein.Pages.Partials
 {
     public class _ProductModel : PageModel
     {
-        private readonly SereniContext _context;
+        private readonly SereinContext _context;
 
-        public _ProductModel(SereniContext context)
+        public _ProductModel(SereinContext context)
         {
             _context = context;
         }

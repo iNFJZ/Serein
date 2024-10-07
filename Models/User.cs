@@ -1,8 +1,7 @@
-﻿using Org.BouncyCastle.Crypto.Generators;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
-namespace Sereni.Models;
+namespace Serein.Models;
 
 public partial class User
 {
@@ -21,11 +20,16 @@ public partial class User
     public string? Role { get; set; }
 
     public string? AvatarUrl { get; set; }
+
     public bool IsVerified { get; set; }
-    public string VerificationCode { get; set; } = string.Empty; 
-    public DateTime? VerificationSentAt { get; set; } 
-    public string PasswordResetToken { get; set; } = string.Empty; 
+
+    public string? VerificationCode { get; set; }
+
+    public DateTime? VerificationSentAt { get; set; }
+
     public DateTime? PasswordResetSentAt { get; set; }
+
+    public string? PasswordResetToken { get; set; }
 
     public virtual ICollection<Customization> Customizations { get; set; } = new List<Customization>();
 

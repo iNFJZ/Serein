@@ -1,17 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using Sereni.Models;
-using Sereni.Services;
+using Serein.Models;
+using Serein.Services;
 using System.ComponentModel.DataAnnotations;
 
-namespace Sereni.Pages.Views.Account
+namespace Serein.Pages.Views.Account
 {
     public class RegisterModel : PageModel
     {
-        private readonly SereniContext _context;
+        private readonly SereinContext _context;
         private readonly EmailService _emailService;
-        public RegisterModel(SereniContext context, EmailService emailService)
+        public RegisterModel(SereinContext context, EmailService emailService)
         {
             _context = context;
             _emailService = emailService;
@@ -92,7 +92,7 @@ namespace Sereni.Pages.Views.Account
                     Request.Scheme);
 
                 await _emailService.SendEmailAsync(Input.Email, "Verify your account",
-                    $"Please confirm your account by clicking this link: <a href='{verificationLink}'>{verificationLink}</a>");
+                    $"Please confirm your account by clicking this link: <a href='{verificationLink}'>Verify account</a>");
             }
             else
             {

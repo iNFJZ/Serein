@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Sereni.Models;
+namespace Serein.Models;
 
 public partial class Customization
 {

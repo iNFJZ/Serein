@@ -1,4 +1,4 @@
-﻿namespace Sereni.Models
+﻿namespace Serein.Models
 {
     public class EmailSettings
     {

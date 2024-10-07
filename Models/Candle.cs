@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Sereni.Models;
+namespace Serein.Models;
 
 public partial class Candle
 {
@@ -23,17 +22,19 @@ public partial class Candle
     public decimal? OriginalPrice { get; set; }
 
     public decimal? SalePrice { get; set; }
-
+    public decimal Price
+    {
+        get { return SalePrice ?? OriginalPrice ?? 0; }
+        set { }
+    }
     public string? ImageUrl { get; set; }
 
     public string? HoverImageUrl { get; set; }
-    public decimal Price
-    {
-        get { return SalePrice ?? OriginalPrice ?? 0; } 
-        set {  }
-    }
-    public float? AverageRating { get; set; } = null;
-    public int? StarCount { get; set; } = null;
+
+    public double? AverageRating { get; set; }
+
+    public int? StarCount { get; set; }
+
     public virtual ICollection<CandleCategory> CandleCategories { get; set; } = new List<CandleCategory>();
 
     public virtual ICollection<Customization> Customizations { get; set; } = new List<Customization>();

@@ -2,7 +2,7 @@
 using MimeKit;
 using System.Threading.Tasks;
 
-namespace Sereni.Services
+namespace Serein.Services
 {
     public class EmailService
     {
@@ -22,7 +22,7 @@ namespace Sereni.Services
         public async Task SendEmailAsync(string email, string subject, string message)
         {
             var emailMessage = new MimeMessage();
-            emailMessage.From.Add(new MailboxAddress("Sereni", _smtpUser));
+            emailMessage.From.Add(new MailboxAddress("Serein", _smtpUser));
             emailMessage.To.Add(new MailboxAddress("", email));
             emailMessage.Subject = subject;
             emailMessage.Body = new TextPart("html")

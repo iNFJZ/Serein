@@ -1,4 +1,4 @@
-﻿namespace Sereni.Services.IServices
+﻿namespace Serein.Services.IServices
 {
     public interface IEmailService
     {

@@ -1,16 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using Sereni.Models;
+using Serein.Models;
 using System.ComponentModel.DataAnnotations;
 
-namespace Sereni.Pages.Views.Account
+namespace Serein.Pages.Views.Account
 {
     public class ResetPasswordModel : PageModel
     {
-        private readonly SereniContext _context;
+        private readonly SereinContext _context;
 
-        public ResetPasswordModel(SereniContext context)
+        public ResetPasswordModel(SereinContext context)
         {
             _context = context;
         }

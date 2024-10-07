@@ -1,11 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Sereni.Services.IServices;
+using Serein.Services.IServices;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Sereni.Pages.Partials
+namespace Serein.Pages.Partials
 {
     public class _WorkshopModel : PageModel
     {
@@ -50,7 +50,7 @@ namespace Sereni.Pages.Partials
 
             // G?i email c?m ?n
             var subject = "C?m ?n b?n ?ã ??ng ký!";
-            var body = $"Chào {Name},<br><br>C?m ?n b?n ?ã ??ng ký tham gia workshop {Workshop}. Chúng tôi s? liên l?c v?i b?n s?m nh?t có th?.<br><br>Trân tr?ng,<br>??i ng? Sereni";
+            var body = $"Chào {Name},<br><br>C?m ?n b?n ?ã ??ng ký tham gia workshop {Workshop}. Chúng tôi s? liên l?c v?i b?n s?m nh?t có th?.<br><br>Trân tr?ng,<br>??i ng? Serein";
 
             try
             {
