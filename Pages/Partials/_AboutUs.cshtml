@@ -1,35 +1,31 @@
-﻿<div id="about-us" class="container">
-        <h2>Vì sao lựa chọn chúng tôi</h2>
-        <div class="content">
-            <div class="features">
-                <div class="feature">
-                    <img src="~/images/aboutus/icon1.png" alt="Lưu hương thơm trong phòng">
-                    <h3>Lưu hương thơm trong phòng</h3>
-                    <p>Lorem ipsum dolor sit amet consectet adipiscing elit sed do eiusmod tempor incididunt</p>
-                </div>
-                <div class="feature">
-                    <img src="~/images/aboutus/icon2.png" alt="Thân thiện với môi trường">
-                    <h3>Thân thiện với môi trường</h3>
-                    <p>Lorem ipsum dolor sit amet consectet adipiscing elit sed do eiusmod tempor incididunt</p>
-                </div>
-            </div>
+﻿<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 
-            <!-- Candle image in the center -->
-            <div class="candle-image">
-                <img src="~/images/aboutus/centerimage.png" alt="Candle">
-            </div>
-
-            <div class="features">
-                <div class="feature">
-                    <img src="~/images/aboutus/icon3.png" alt="Mùi hương dễ chịu">
-                    <h3>Mùi hương dễ chịu</h3>
-                    <p>Lorem ipsum dolor sit amet consectet adipiscing elit sed do eiusmod tempor incididunt</p>
-                </div>
-                <div class="feature">
-                    <img src="~/images/aboutus/icon4.png" alt="100% Organic">
-                    <h3>100% Organic</h3>
-                    <p>Lorem ipsum dolor sit amet consectet adipiscing elit sed do eiusmod tempor incididunt</p>
-                </div>
-            </div>
+<section class="about-us" id="aboutus-section">
+    <div class="about-container">
+        <div class="about-image">
+            <img src="@Url.Content("~/images/aboutus/logo.png")" alt="About Us Image">
+        </div>
+        <div class="about-content">
+            <h2>Về <span>chúng tôi</span></h2>
+            <p class="short-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry...</p>
+            <p class="hidden-text" style="display: none;">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled.</p>
+            <button class="btn-read-more">Xem thêm</button>
         </div>
     </div>
+</section>
+<script>
+        document.querySelector('.btn-read-more').addEventListener('click', function () {
+        var shortText = document.querySelector('.short-text');
+        var fullText = document.querySelector('.hidden-text');
+
+        if (fullText.style.display === "none") {
+            fullText.style.display = "block";  // Show full text
+            shortText.style.display = "none";  // Hide short text
+            this.textContent = "Thu gọn";  // Change button text
+        } else {
+            fullText.style.display = "none";  // Hide full text
+            shortText.style.display = "block";  // Show short text
+            this.textContent = "Xem thêm";  // Change button text
+        }
+    });
+</script>

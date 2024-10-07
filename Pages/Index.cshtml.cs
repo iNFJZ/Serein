@@ -1,21 +1,24 @@
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Sereni.Models;
+using Sereni.Pages.Partials;
 namespace Sereni.Pages
 {
     [Authorize]
-    public class IndexModel : PageModel
+    public class IndexModel : PageModel  
     {
+        public _ProductModel ProductModel { get; set; }
         private readonly ILogger<IndexModel> _logger;
-
-        public IndexModel(ILogger<IndexModel> logger)
+        private readonly SereniContext _context;
+        public IndexModel(ILogger<IndexModel> logger, SereniContext context)
         {
             _logger = logger;
+            _context = context;
         }
-
-        public void OnGet()
+        public async Task OnGetAsync()
         {
-
+            ProductModel = new _ProductModel(new SereniContext());
+            await ProductModel.OnGetAsync();
         }
     }
 }
