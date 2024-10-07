@@ -9,7 +9,7 @@ builder.Services.AddDbContext<SereniContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DB")));
 
 builder.Services.AddTransient<EmailService>(provider =>
-    new EmailService("smtp.gmail.com", 587, "ilubeos@gmail.com", "iowt pcjh xjig yeio"));
+    new EmailService("smtp.gmail.com", 587, "candleserein@gmail.com", "opsn mfjj nobs vndf"));
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
