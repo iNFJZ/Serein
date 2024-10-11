@@ -33,6 +33,8 @@ public partial class SereinContext : DbContext
 
     public virtual DbSet<Payment> Payments { get; set; }
 
+    public virtual DbSet<RegisterWorkshop> RegisterWorkshops { get; set; }
+
     public virtual DbSet<Review> Reviews { get; set; }
 
     public virtual DbSet<Shipping> Shippings { get; set; }
@@ -43,7 +45,10 @@ public partial class SereinContext : DbContext
 
     public virtual DbSet<Wishlist> Wishlists { get; set; }
 
+    public virtual DbSet<Workshop> Workshops { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+
     {
         if (!optionsBuilder.IsConfigured)
         {
@@ -232,6 +237,17 @@ public partial class SereinContext : DbContext
                 .HasConstraintName("FK__Payments__OrderI__5CD6CB2B");
         });
 
+        modelBuilder.Entity<RegisterWorkshop>(entity =>
+        {
+            entity.HasKey(e => e.WorkshopId).HasName("PK__Register__7A008C0A5F90C7F1");
+
+            entity.ToTable("RegisterWorkshop");
+
+            entity.Property(e => e.WorkshopDate).HasColumnType("datetime");
+            entity.Property(e => e.WorkshopLocation).HasMaxLength(100);
+            entity.Property(e => e.WorkshopName).HasMaxLength(100);
+        });
+
         modelBuilder.Entity<Review>(entity =>
         {
             entity.HasKey(e => e.ReviewId).HasName("PK__Reviews__74BC79AEC1EE04BA");
@@ -355,6 +371,27 @@ public partial class SereinContext : DbContext
             entity.HasOne(d => d.User).WithMany(p => p.Wishlists)
                 .HasForeignKey(d => d.UserId)
                 .HasConstraintName("FK__Wishlist__UserID__6477ECF3");
+        });
+
+        modelBuilder.Entity<Workshop>(entity =>
+        {
+            entity.HasKey(e => e.RegistrationId).HasName("PK__Workshop__6EF58810568B3F1F");
+
+            entity.Property(e => e.Email).HasMaxLength(100);
+            entity.Property(e => e.FullName).HasMaxLength(100);
+            entity.Property(e => e.PaymentStatus).HasMaxLength(50);
+            entity.Property(e => e.PhoneNumber).HasMaxLength(15);
+            entity.Property(e => e.RegistrationDate).HasColumnType("datetime");
+
+            entity.HasOne(d => d.User).WithMany(p => p.Workshops)
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__Workshops__UserI__7C4F7684");
+
+            entity.HasOne(d => d.WorkshopNavigation).WithMany(p => p.Workshops)
+                .HasForeignKey(d => d.WorkshopId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__Workshops__Works__7B5B524B");
         });
 
         OnModelCreatingPartial(modelBuilder);

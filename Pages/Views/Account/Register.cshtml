@@ -42,7 +42,7 @@
             <div class="input-box @(ModelState["Input.Password"]?.Errors.Count > 0 ? "has-error" : "")">
                 <input type="password" asp-for="Input.Password" placeholder="Password" required />
                 <i class="bx bxs-lock-alt"></i>
-                <span asp-validation-for="Input.Password" class="text-danger"></span> <!-- Thông báo lỗi cho password -->
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
             </div><br />
             <button type="submit" class="btn">Sign Up</button>
             <div class="register-link">

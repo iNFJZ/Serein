@@ -1,4 +1,5 @@
-﻿<div class="container">
+﻿@model Serein.Pages.Partials._GiftboxModel
+<div class="container" id="giftbox-section">
     <div class="row">
         <div class="col-12">
             <div class="section_title">
@@ -12,87 +13,31 @@
         <div class="tab-pane fade show active" id="Men" role="tabpanel">
             <div class="row">
                 <div class="product_carousel product_column4 owl-carousel">
-                    <div class="col-lg-3">
-                        <article class="single_product">
-                            <figure>
-                                <div class="product_thumb">
-                                    <a href="#" class="primary_img">
-                                        <img src="images/gift/gift1-1.png" alt="">
-                                    </a>
-                                </div>
-                                <figcaption class="gift_content">
-                                    <h4 class="product_name">
-                                        <a href="#">Handmade Gift Box</a>
-                                    </h4>
-                                    <div class="price_box">
-                                        <span class="current_price">99,000 VND</span>
-                                    </div>
-                                </figcaption>
-
-                            </figure>
-
-                        </article>
-                    </div>
-                    <div class="col-lg-3">
-                        <article class="single_product">
-                            <figure>
-                                <div class="product_thumb">
-                                    <a href="#" class="primary_img">
-                                        <img src="images/gift/gift1-2.png" alt="">
-                                    </a>
-                                </div>
-                                <figcaption class="gift_content">
-                                    <h4 class="product_name">
-                                        <a href="#">Handmade Gift Box</a>
-                                    </h4>
-
-                                    <div class="price_box">
-                                        <span class="current_price">89,000 VND</span>
-                                    </div>
-                                </figcaption>
-                            </figure>
-
-                        </article>
-                    </div>
-                    <div class="col-lg-3">
-                        <article class="single_product">
-                            <figure>
-                                <div class="product_thumb">
-                                    <a href="#" class="primary_img">
-                                        <img src="images/gift/gift3-1.png" alt="">
-                                    </a>
-                                </div>
-                                <figcaption class="gift_content">
-                                    <h4 class="product_name">
-                                        <a href="#">Handmade Gift Box</a>
-                                    </h4>
-                                    <div class="price_box">
-                                        <span class="current_price">119,000 VND</span>
-                                    </div>
-                                </figcaption>
-                            </figure>
-
-                        </article>
-                    </div>
-                    <div class="col-lg-3">
-                        <article class="single_product">
-                            <figure>
-                                <div class="product_thumb">
-                                    <a href="#" class="primary_img">
-                                        <img src="images/gift/gift4-1.png" alt="">
-                                    </a>
-                                </div>
-                                <figcaption class="gift_content">
-                                    <h4 class="product_name">
-                                        <a href="#">Handmade Gift Box</a>
-                                    </h4>
-                                    <div class="price_box">
-                                        <span class="current_price">129,000 VND</span>
-                                    </div>
-                                </figcaption>
-                            </figure>
-                        </article>
-                    </div>
+                    @if (Model?.GiftBoxes != null && Model.GiftBoxes.Any())
+                    {
+                        @foreach (var giftbox in Model.GiftBoxes)
+                        {
+                            <div class="col-lg-3">
+                                <article class="single_product">
+                                    <figure>
+                                        <div class="product_thumb">
+                                            <a href="#" class="primary_img">
+                                                <img src="@giftbox.ImageUrl" alt="@giftbox.GiftBoxName">
+                                            </a>
+                                        </div>
+                                        <figcaption class="gift_content">
+                                            <h4 class="product_name">
+                                                <a href="#">@giftbox.GiftBoxName</a>
+                                            </h4>
+                                            <div class="price_box">
+                                                <span class="current_price">@giftbox.Price.ToString("C")</span>
+                                            </div>
+                                        </figcaption>
+                                    </figure>
+                                </article>
+                            </div>
+                        }
+                    }
                 </div>
             </div>
         </div>

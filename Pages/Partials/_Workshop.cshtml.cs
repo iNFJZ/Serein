@@ -1,7 +1,9 @@
-using Microsoft.AspNetCore.Mvc;
+ï»¿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Serein.Services.IServices;
+using Microsoft.EntityFrameworkCore;
+using Serein.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -9,63 +11,81 @@ namespace Serein.Pages.Partials
 {
     public class _WorkshopModel : PageModel
     {
-        private readonly IEmailService _emailService;
+        private readonly SereinContext _context;
 
-        public _WorkshopModel(IEmailService emailService) 
+        public _WorkshopModel(SereinContext context)
         {
-            _emailService = emailService;
+            _context = context;
         }
 
-        [BindProperty]
-        public string Name { get; set; }
+        public List<RegisterWorkshop> RegisterWorkshops { get; set; } = new List<RegisterWorkshop>();
 
-        [BindProperty]
-        public string Phone { get; set; }
-
-        [BindProperty]
-        public string Email { get; set; }
-
-        [BindProperty]
-        public string Workshop { get; set; }
-
-        public void OnGet()
+        public async Task OnGetAsync()
         {
+            RegisterWorkshops = await _context.RegisterWorkshops.ToListAsync();
         }
 
-        public async Task<IActionResult> OnPostAsync() // Thay ??i thành Task<IActionResult>
+        public async Task<IActionResult> OnPostAsync()
         {
-            Name = Request.Form["Name"];
-            Workshop = Request.Form["Workshop"];
-            Phone = Request.Form["Phone"];
-            Email = Request.Form["Email"];
-            if (!ModelState.IsValid)
+            var fullName = Request.Form["FullName"];
+            var phoneNumber = Request.Form["PhoneNumber"];
+            var email = User.FindFirst(System.Security.Claims.ClaimTypes.Email)?.Value;
+            var workshopId = int.Parse(Request.Form["WorkshopId"]);
+            var notes = Request.Form["Notes"];
+            var userIdClaim = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+
+            // Kiá»ƒm tra cÃ¡c giÃ¡ trá»‹ UserId vÃ  Email
+            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(userIdClaim))
             {
-                // Log the model state errors
-                foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
-                {
-                    Console.WriteLine($"Model Error: {error.ErrorMessage}");
-                }
+                ModelState.AddModelError(string.Empty, "User information is missing.");
                 return Page();
             }
 
-            // G?i email c?m ?n
-            var subject = "C?m ?n b?n ?ã ??ng ký!";
-            var body = $"Chào {Name},<br><br>C?m ?n b?n ?ã ??ng ký tham gia workshop {Workshop}. Chúng tôi s? liên l?c v?i b?n s?m nh?t có th?.<br><br>Trân tr?ng,<br>??i ng? Serein";
+            // Khai bÃ¡o biáº¿n userId ngoÃ i scope cá»§a int.TryParse
+            int userId;
+            if (!int.TryParse(userIdClaim, out userId) || userId <= 0)
+            {
+                ModelState.AddModelError(string.Empty, "Invalid User ID.");
+                return Page();
+            }
+
+            if (workshopId <= 0)
+            {
+                ModelState.AddModelError(string.Empty, "Invalid Workshop selection.");
+                return Page();
+            }
+
+            // Táº¡o Ä‘á»‘i tÆ°á»£ng Workshop
+            var workshop = new Workshop
+            {
+                WorkshopId = workshopId,
+                UserId = userId,
+                Email = email,
+                FullName = fullName,
+                PhoneNumber = phoneNumber,
+                Notes = notes,
+                RegistrationDate = DateTime.Now
+            };
+
+            // Kiá»ƒm tra ModelState trÆ°á»›c khi thÃªm
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
 
             try
             {
-                await _emailService.SendEmailAsync(Email, subject, body); // S? d?ng await cho ph??ng th?c b?t ??ng b?
-                Console.WriteLine("Email sent successfully.");
+                // ThÃªm workshop vÃ o DbContext
+                _context.Workshops.Add(workshop);
+                await _context.SaveChangesAsync();
+                return RedirectToPage("/Index");
             }
             catch (Exception ex)
             {
-                // Ghi l?i l?i ho?c x? lý thông báo l?i
-                Console.WriteLine($"L?i khi g?i email: {ex.Message}");
-                ModelState.AddModelError(string.Empty, "Có l?i x?y ra khi g?i email. Vui lòng th? l?i.");
+                ModelState.AddModelError(string.Empty, "An error occurred while saving data: " + ex.Message);
                 return Page();
             }
-
-            return RedirectToPage("/Index");
         }
+
     }
 }

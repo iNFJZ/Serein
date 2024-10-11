@@ -1,4 +1,6 @@
-﻿<section class="workshop" id="workshop-section">
+﻿@model Serein.Pages.Partials._WorkshopModel
+
+<section class="workshop" id="workshop-section">
     <h2>Join Our Workshop</h2>
     <div class="workshop-container">
         <div class="card col-lg-3">
@@ -8,15 +10,28 @@
             <img src="images/workshop/workshop2.png" alt="Workshop 2">
         </div>
         <div class="workshop-form col-lg-6">
-            <form method="post" asp-page="/Partials/_Workshop">
-                <input type="text" name="Name" placeholder="Full Name" required>
-                <input type="tel" name="Phone" onkeypress="return isNumberKey(event)" maxlength="10" placeholder="Phone Number" required>
-                <input type="email" name="Email" placeholder="Email" required>
-                <select name="Workshop" required>
+            <form method="post">
+                <input type="text" name="FullName" placeholder="Full Name" required>
+                <input type="tel" name="PhoneNumber" onkeypress="return isNumberKey(event)" maxlength="10" placeholder="Phone Number" required>
+                <input type="hidden" name="Email" value="@User.FindFirst(System.Security.Claims.ClaimTypes.Email)?.Value" />
+
+                <select name="WorkshopId" required>
                     <option value="" disabled selected>Select Workshop</option>
-                    <option value="making-candles">Candle Making</option>
-                    <option value="candle-decorating">Candle Decorating</option>
+                    @if (Model?.RegisterWorkshops != null && Model.RegisterWorkshops.Any())
+                    {
+                        foreach (var workshop in Model.RegisterWorkshops)
+                        {
+                            <option value="@workshop.WorkshopId">@workshop.WorkshopName - @workshop.WorkshopDate.ToString("dd/MM/yyyy HH:mm:ss") - @workshop.WorkshopLocation</option>
+                        }
+                    }
+                    else
+                    {
+                        <option value="" disabled>No workshops available</option>
+                    }
                 </select>
+
+                <textarea name="Notes" placeholder="Any special notes or requests (Optional)"></textarea>
+                <input type="hidden" name="UserId" value="@User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value"/>
                 <button type="submit">Submit</button>
             </form>
         </div>
