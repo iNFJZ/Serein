@@ -1,8 +1,10 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Serein.Models;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Serein.Pages.Partials
@@ -31,6 +33,61 @@ namespace Serein.Pages.Partials
             }
 
             Candles = candles;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> OnPostAddToCartAsync(int candleId, int? customizationId, int userId)
+        {
+            var existingCartItem = await _context.ShoppingCarts
+                .FirstOrDefaultAsync(x => x.CandleId == candleId &&
+                                           x.CustomizationId == customizationId &&
+                                           x.UserId == userId);
+
+            if (existingCartItem == null)
+            {
+                var newCartItem = new ShoppingCart
+                {
+                    CandleId = candleId,
+                    CustomizationId = customizationId,
+                    UserId = userId
+                };
+
+                _context.ShoppingCarts.Add(newCartItem);
+                await _context.SaveChangesAsync();
+
+                return RedirectToPage("/Index"); // Redirect về trang chính sau khi thêm
+            }
+            else
+            {
+                return RedirectToPage("/Index"); // Hoặc có thể hiển thị thông báo lỗi
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> OnPostAddToWishlistAsync(int candleId, int userId)
+        {
+            var existingWishlistItem = await _context.Wishlists
+                .FirstOrDefaultAsync(x => x.CandleId == candleId &&
+                                           x.UserId == userId);
+
+            if (existingWishlistItem == null)
+            {
+                var newWishlistItem = new Wishlist
+                {
+                    CandleId = candleId,
+                    UserId = userId,
+                    AddedDate = DateTime.Now
+                };
+
+                _context.Wishlists.Add(newWishlistItem);
+                await _context.SaveChangesAsync();
+
+                return RedirectToPage("/Index"); // Redirect về trang chính sau khi thêm
+            }
+            else
+            {
+                return RedirectToPage("/Index"); // Hoặc có thể hiển thị thông báo lỗi
+            }
         }
     }
 }

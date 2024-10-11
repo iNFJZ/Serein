@@ -1,4 +1,5 @@
 ﻿@model Serein.Pages.Partials._HeaderModel
+@model Serein.Pages.Partials._HeaderModel
 <header>
     <div class="main_header header_transparent header-mobile-m">
         <div class="header_container sticky-header">
@@ -15,9 +16,7 @@
                         <div class="main_menu menu_two menu_position">
                             <nav>
                                 <ul id="nav">
-                                    <li>
-                                        <a href="#slider" class="active" style="margin-top: 1px">Home</a>
-                                    </li>
+                                    <li><a href="#slider" class="active" style="margin-top: 1px">Home</a></li>
                                     <li><a href="#aboutus-section">About Us</a></li>
                                     <li class="mega_items">
                                         <a href="#product-section">Products </a>
@@ -52,55 +51,64 @@
                                         </div>
                                     </li>
                                     <!-- Wishlist -->
-                                    <li class="header_wishlist">
-                                        <a href="#">
+                                    <li class="mini_cart_wrapper">
+                                        <a href="javascript:void(0)">
                                             <i class="fa fa-heart-o"></i>
-                                            <span class="item_count">4</span>
+                                            <span class="item_count">@Model.WishlistCount</span>
                                         </a>
+                                        <div class="mini_cart mini_cart2">
+                                            <div class="cart_gallery">
+                                                @foreach (var item in Model.WishlistItems)
+                                                {
+                                                    <div class="cart_item">
+                                                        <div class="cart_img">
+                                                            <a href="#"><img src="@item.ImageUrl" alt="@item.CandleName"></a>
+                                                        </div>
+                                                        <div class="cart_info">
+                                                            <a href="#">@item.CandleName</a>
+                                                            <p><span>@item.Price.ToString("C")</span></p>
+                                                        </div>
+                                                        <div class="cart_remove">
+                                                            <a href="#"><i class="fa fa-times"></i></a>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            </div> <!-- Đóng thẻ div cho cart_gallery -->
+                                        </div> <!-- Đóng thẻ div cho mini_wishlist2 -->
                                     </li>
-
                                     <!-- Cart -->
                                     <li class="mini_cart_wrapper">
                                         <a href="javascript:void(0)">
                                             <i class="fa fa-shopping-cart"></i>
-                                            <span class="item_count">2</span>
+                                            <span class="item_count">@Model.CartCount</span>
                                         </a>
                                         <div class="mini_cart mini_cart2">
                                             <div class="cart_gallery">
-                                                <div class="cart_item">
-                                                    <div class="cart_img">
-                                                        <a href="#"><img src="images/small-product/mini1.png" alt="Candles"></a>
+                                                @foreach (var item in Model.CartItems)
+                                                {
+                                                    <div class="cart_item">
+                                                        <div class="cart_img">
+                                                            <a href="#"><img src="@item.ImageUrl" alt="@item.CandleName"></a>
+                                                        </div>
+                                                        <div class="cart_info">
+                                                            <a href="#">@item.CandleName</a>
+                                                            <p><span>@item.Price.ToString("C")</span> X @item.Quantity</p>
+                                                        </div>
+                                                        <div class="cart_remove">
+                                                            <a href="#"><i class="fa fa-times"></i></a>
+                                                        </div>
                                                     </div>
-                                                    <div class="cart_info">
-                                                        <a href="#">Nến thơm 1</a>
-                                                        <p><span>99,000 VND</span> X 1</p>
-                                                    </div>
-                                                    <div class="cart_remove">
-                                                        <a href="#"><i class="fa fa-times"></i></a>
-                                                    </div>
-                                                </div>
-                                                <div class="cart_item">
-                                                    <div class="cart_img">
-                                                        <a href="#"><img src="images/small-product/mini2.png" alt="Candles"></a>
-                                                    </div>
-                                                    <div class="cart_info">
-                                                        <a href="#">Nến thơm 2</a>
-                                                        <p><span>99,000 VND</span> X 1</p>
-                                                    </div>
-                                                    <div class="cart_remove">
-                                                        <a href="#"><i class="fa fa-times"></i></a>
-                                                    </div>
-                                                </div>
+                                                }
                                             </div>
                                             <div class="mini_cart_table">
                                                 <div class="cart_table_border">
                                                     <div class="cart_total">
                                                         <span>Sub Total :</span>
-                                                        <span class="price">299,000 VND</span>
+                                                        <span class="price">@Model.CartTotal.ToString("C")</span>
                                                     </div>
                                                     <div class="cart_total mt-10">
                                                         <span>Total :</span>
-                                                        <span class="price">299,000 VND</span>
+                                                        <span class="price">@Model.CartTotal.ToString("C")</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -173,7 +181,6 @@
     </div>
 </header>
 
-
 <!-- JavaScript to handle the active menu item -->
 <script>
     function isInViewport(element) {
@@ -181,7 +188,6 @@
         return rect.top < window.innerHeight && rect.bottom > 0;
     }
 
-    // Lấy tất cả các mục điều hướng
     var navItems = document.querySelectorAll('#nav a');
 
     var sections = {
@@ -215,17 +221,18 @@
         }
     });
 </script>
+
 <script>
-    const candles = @Html.Raw(Json.Serialize(Model.Candles)); // Chuyển đổi danh sách sản phẩm thành JSON
+    const candles = @Html.Raw(Json.Serialize(Model.Candles));
 
     document.getElementById('search-form').addEventListener('submit', function () {
         const query = document.getElementById('search-input').value.toLowerCase();
         const resultsContainer = document.getElementById('search-results');
-        resultsContainer.innerHTML = ''; // Xóa kết quả cũ
+        resultsContainer.innerHTML = '';
 
         if (query) {
             // Lọc sản phẩm dựa trên tên
-            const results = candles.filter(candle => 
+            const results = candles.filter(candle =>
                 candle.candleName.toLowerCase().includes(query)
             );
 
@@ -252,46 +259,3 @@
         }
     });
 </script>
-<script>
-    function isInViewport(element) {
-        const rect = element.getBoundingClientRect();
-        return rect.top < window.innerHeight && rect.bottom > 0;
-    }
-
-    // Lấy tất cả các mục điều hướng
-    var navItems = document.querySelectorAll('#nav a');
-
-    var sections = {
-        'slider': 'Home',
-        'aboutus-section': 'About Us',
-        'product-section': 'Products',
-        'workshop-section': 'Workshop',
-        'blog-section': 'Blog'
-    };
-
-    window.addEventListener('scroll', function () {
-        let currentSection = '';
-
-        for (let section in sections) {
-            const element = document.querySelector(`#${section}`);
-            if (element && isInViewport(element)) {
-                currentSection = section;
-                break;
-            }
-        }
-
-        navItems.forEach(function (item) {
-            item.classList.remove('active');
-        });
-
-        if (currentSection) {
-            const activeLink = document.querySelector(`a[href="#${currentSection}"]`);
-            if (activeLink) {
-                activeLink.classList.add('active');
-            }
-        }
-    });
-</script>
-
-
-
