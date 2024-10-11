@@ -30,14 +30,23 @@
                                                 <div class="action_links">
                                                     <ul>
                                                         <li class="add_to_cart">
-                                                            <a href="#" title="Add to Cart">
-                                                                <i class="fa fa-shopping-cart"></i>
-                                                            </a>
+                                                            <form method="post" action="/Partials/_Product?handler=AddToCart">
+                                                                <input type="hidden" name="candleId" value="@candle.CandleId" />
+                                                                <input type="hidden" name="customizationId" value="null" />
+                                                                <input type="hidden" name="userId" value="1" />
+                                                                <button type="submit" title="Add to Cart">
+                                                                    <i class="fa fa-shopping-cart"></i>
+                                                                </button>
+                                                            </form>
                                                         </li>
                                                         <li class="wishlist">
-                                                            <a href="#" title="Add to Wishlist">
-                                                                <i class="fa fa-heart-o"></i>
-                                                            </a>
+                                                            <form method="post" action="/Partials/_Product?handler=AddToWishlist">
+                                                                <input type="hidden" name="candleId" value="@candle.CandleId" />
+                                                                <input type="hidden" name="userId" value="1" />
+                                                                <button type="submit" title="Add to Wishlist">
+                                                                    <i class="fa fa-heart-o"></i>
+                                                                </button>
+                                                            </form>
                                                         </li>
                                                         <li class="compare">
                                                             <a href="#" title="Add to Compare">
@@ -60,7 +69,7 @@
                                                 <div class="price_box">
                                                     @if (candle.SalePrice.HasValue)
                                                     {
-                                                        <span class="old_price">@candle.OriginalPrice.Value.ToString("C")"</span>
+                                                        <span class="old_price">@candle.OriginalPrice.Value.ToString("C")</span>
                                                         <span class="current_price">@candle.SalePrice.Value.ToString("C")</span>
                                                     }
                                                     else

@@ -66,6 +66,13 @@
     }
   });
 
+    // slide toggle activation of mini wishlist
+    $(".mini_wishlist_wrapper > a").on("click", function () {
+        if ($(window).width() < 991) {
+            $(".mini_wishlist").slideToggle("medium");
+        }
+    });
+
   // sticky header
 
   $(window).on("scroll", function () {
