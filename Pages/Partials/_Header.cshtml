@@ -1,68 +1,28 @@
-﻿<header>
+﻿@model Serein.Pages.Partials._HeaderModel
+<header>
     <div class="main_header header_transparent header-mobile-m">
         <div class="header_container sticky-header">
             <div class="container-fluid">
                 <div class="row align-items-center">
+                    <!-- Logo Section -->
                     <div class="col-lg-3">
                         <div class="logo" style="width: 300px; margin-left: -40px; margin-top: -50px;">
-                            <a href="@Url.Page("/Index")"><img src="images/logo.png" alt="" ></a>
+                            <a href="@Url.Page("/Index")"><img src="images/logo.png" alt="Logo"></a>
                         </div>
                     </div>
-
+                    <!-- Menu Section -->
                     <div class="col-lg-5">
-                        <!-- main-menu starts -->
                         <div class="main_menu menu_two menu_position">
                             <nav>
-                                <ul>
+                                <ul id="nav">
                                     <li>
-                                        <a href="@Url.Page("/Index")" class="active">
-                                            Home <i class="fa fa-angle-down"></i>
-                                        </a>
-                                        <ul class="sub_menu">
-                                            <li><a href="#">Scented Jar Candle</a></li>
-                                            <li><a href="#">Scented Shell Candle</a></li>
-                                            <li><a href="#">Custom Scented Candle</a></li>
-                                        </ul>
-
+                                        <a href="#slider" class="active" style="margin-top: 1px">Home</a>
                                     </li>
-                                    <li><a href="#aboutus-section" style="margin-top: 2px;">About Us</a></li>
+                                    <li><a href="#aboutus-section">About Us</a></li>
                                     <li class="mega_items">
-                                        <a href="#product-section" style="margin-top: -3px;">Products  <i class="fa fa-angle-down"></i></a>
+                                        <a href="#product-section">Products </a>
                                         <div class="mega_menu">
                                             <ul class="mega_menu_inner">
-                                                <li>
-                                                    <a href="#">Scented Shell Candle</a>
-                                                    <ul>
-                                                        <li><a href="#">Scented Shell Candle 1</a></li>
-                                                        <li><a href="#">Scented Shell Candle 2</a></li>
-                                                        <li><a href="#">Scented Shell Candle 3</a></li>
-                                                        <li><a href="#">Scented Shell Candle 4</a></li>
-                                                        <li><a href="#">Scented Shell Candle 5</a></li>
-                                                        <li><a href="#">Scented Shell Candle 6</a></li>
-                                                    </ul>
-
-                                                </li>
-                                                <li>
-                                                    <a href="#">Scented Jar Candle</a>
-                                                    <ul>
-                                                        <li><a href="#">Scented Jar Candle 1</a></li>
-                                                        <li><a href="#">Scented Jar Candle 2</a></li>
-                                                        <li><a href="#">Scented Jar Candle 3</a></li>
-                                                        <li><a href="#">Scented Jar Candle 4</a></li>
-                                                        <li><a href="#">Scented Jar Candle 5</a></li>
-                                                    </ul>
-
-                                                </li>
-                                                <li>
-                                                    <a href="#">Custom Scented Candle</a>
-                                                    <ul>
-                                                        <li><a href="#">Custom Scented Candle 1</a></li>
-                                                        <li><a href="#">Custom Scented Candle 2</a></li>
-                                                        <li><a href="#">Custom Scented Candle 3</a></li>
-                                                        <li><a href="#">Custom Scented Candle 4</a></li>
-                                                    </ul>
-
-                                                </li>
                                             </ul>
                                         </div>
                                     </li>
@@ -71,45 +31,45 @@
                                 </ul>
                             </nav>
                         </div>
-
-                        <!-- main menu ends -->
                     </div>
+
+                    <!-- User and Cart Section -->
                     <div class="col-lg-4">
                         <div class="header_top_right">
                             <div class="header_right_info">
                                 <ul>
+                                    <!-- Search Box -->
                                     <li class="search_box">
                                         <a href="javascript:void(0)">
                                             <i class="fa fa-search"></i>
                                         </a>
                                         <div class="search_widget">
-                                            <form action="#">
-                                                <input type="text" placeholder="Search your candles">
+                                            <form id="search-form" action="javascript:void(0);">
+                                                <input type="text" id="search-input" placeholder="Search your candles">
                                                 <button type="submit"><i class="fa fa-search"></i></button>
                                             </form>
+                                            <ul id="search-results" style="display: none;"></ul>
                                         </div>
                                     </li>
+                                    <!-- Wishlist -->
                                     <li class="header_wishlist">
                                         <a href="#">
                                             <i class="fa fa-heart-o"></i>
                                             <span class="item_count">4</span>
                                         </a>
                                     </li>
+
+                                    <!-- Cart -->
                                     <li class="mini_cart_wrapper">
                                         <a href="javascript:void(0)">
                                             <i class="fa fa-shopping-cart"></i>
                                             <span class="item_count">2</span>
                                         </a>
-
-                                        <!-- mini cart  -->
                                         <div class="mini_cart mini_cart2">
                                             <div class="cart_gallery">
                                                 <div class="cart_item">
                                                     <div class="cart_img">
-                                                        <a href="#">
-                                                            <img src="images/small-product/mini1.png"
-                                                                 alt="Candles">
-                                                        </a>
+                                                        <a href="#"><img src="images/small-product/mini1.png" alt="Candles"></a>
                                                     </div>
                                                     <div class="cart_info">
                                                         <a href="#">Nến thơm 1</a>
@@ -121,10 +81,7 @@
                                                 </div>
                                                 <div class="cart_item">
                                                     <div class="cart_img">
-                                                        <a href="#">
-                                                            <img src="images/small-product/mini2.png"
-                                                                 alt="Candles">
-                                                        </a>
+                                                        <a href="#"><img src="images/small-product/mini2.png" alt="Candles"></a>
                                                     </div>
                                                     <div class="cart_info">
                                                         <a href="#">Nến thơm 2</a>
@@ -141,12 +98,10 @@
                                                         <span>Sub Total :</span>
                                                         <span class="price">299,000 VND</span>
                                                     </div>
-
                                                     <div class="cart_total mt-10">
                                                         <span>Total :</span>
                                                         <span class="price">299,000 VND</span>
                                                     </div>
-
                                                 </div>
                                             </div>
                                             <div class="mini_cart_footer">
@@ -158,16 +113,15 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- mini cart ends -->
                                     </li>
                                 </ul>
                             </div>
+
+                            <!-- User Account Section -->
                             <div class="header_account">
                                 <ul>
                                     <li class="top_links">
-                                        <a href="#">
-                                            <i class="fa fa-cog"></i>
-                                        </a>
+                                        <a href="#"><i class="fa fa-cog"></i></a>
                                         <ul class="dropdown_links">
                                             <li><a href="#">Checkout</a></li>
                                             <li><a href="#">My Account</a></li>
@@ -175,10 +129,10 @@
                                             <li><a href="#">Wishlist</a></li>
                                         </ul>
                                     </li>
+
+                                    <!-- Logout -->
                                     <li class="user">
-                                        <a href="#">
-                                            <i class="fa fa-user fa-3x"></i>
-                                        </a>
+                                        <a href="#"><i class="fa fa-user fa-3x"></i></a>
                                         <ul class="dropdown_links">
                                             <li>
                                                 <form method="post" asp-page="/Views/Account/Logout">
@@ -187,6 +141,8 @@
                                             </li>
                                         </ul>
                                     </li>
+
+                                    <!-- Language Selection -->
                                     <li class="language">
                                         <a href="#">
                                             <img src="images/icon/language.png" alt="English"> EN <i class="fa fa-angle-down"></i>
@@ -197,6 +153,8 @@
                                             <li><a href="#">Korean</a></li>
                                         </ul>
                                     </li>
+
+                                    <!-- Currency Selection -->
                                     <li class="currency">
                                         <a href="#">VND <i class="fa fa-angle-down"></i></a>
                                         <ul class="dropdown_currency">
@@ -214,3 +172,126 @@
         </div>
     </div>
 </header>
+
+
+<!-- JavaScript to handle the active menu item -->
+<script>
+    function isInViewport(element) {
+        const rect = element.getBoundingClientRect();
+        return rect.top < window.innerHeight && rect.bottom > 0;
+    }
+
+    // Lấy tất cả các mục điều hướng
+    var navItems = document.querySelectorAll('#nav a');
+
+    var sections = {
+        'slider': 'Home',
+        'aboutus-section': 'About Us',
+        'product-section': 'Products',
+        'workshop-section': 'Workshop',
+        'blog-section': 'Blog'
+    };
+
+    window.addEventListener('scroll', function () {
+        let currentSection = '';
+
+        for (let section in sections) {
+            const element = document.querySelector(`#${section}`);
+            if (element && isInViewport(element)) {
+                currentSection = section;
+                break;
+            }
+        }
+
+        navItems.forEach(function (item) {
+            item.classList.remove('active');
+        });
+
+        if (currentSection) {
+            const activeLink = document.querySelector(`a[href="#${currentSection}"]`);
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
+        }
+    });
+</script>
+<script>
+    const candles = @Html.Raw(Json.Serialize(Model.Candles)); // Chuyển đổi danh sách sản phẩm thành JSON
+
+    document.getElementById('search-form').addEventListener('submit', function () {
+        const query = document.getElementById('search-input').value.toLowerCase();
+        const resultsContainer = document.getElementById('search-results');
+        resultsContainer.innerHTML = ''; // Xóa kết quả cũ
+
+        if (query) {
+            // Lọc sản phẩm dựa trên tên
+            const results = candles.filter(candle => 
+                candle.candleName.toLowerCase().includes(query)
+            );
+
+            if (results.length > 0) {
+                results.forEach(product => {
+                    const li = document.createElement('li');
+                    li.textContent = product.candleName; // Hiển thị tên sản phẩm
+                    resultsContainer.appendChild(li);
+                });
+                resultsContainer.style.display = 'block'; // Hiển thị danh sách kết quả
+            } else {
+                resultsContainer.style.display = 'none'; // Ẩn nếu không có kết quả
+            }
+        } else {
+            resultsContainer.style.display = 'none'; // Ẩn nếu truy vấn trống
+        }
+    });
+
+    // Ẩn danh sách kết quả khi người dùng nhấp ra ngoài
+    document.addEventListener('click', function (e) {
+        const searchWidget = document.querySelector('.search_widget');
+        if (!searchWidget.contains(e.target)) {
+            document.getElementById('search-results').style.display = 'none';
+        }
+    });
+</script>
+<script>
+    function isInViewport(element) {
+        const rect = element.getBoundingClientRect();
+        return rect.top < window.innerHeight && rect.bottom > 0;
+    }
+
+    // Lấy tất cả các mục điều hướng
+    var navItems = document.querySelectorAll('#nav a');
+
+    var sections = {
+        'slider': 'Home',
+        'aboutus-section': 'About Us',
+        'product-section': 'Products',
+        'workshop-section': 'Workshop',
+        'blog-section': 'Blog'
+    };
+
+    window.addEventListener('scroll', function () {
+        let currentSection = '';
+
+        for (let section in sections) {
+            const element = document.querySelector(`#${section}`);
+            if (element && isInViewport(element)) {
+                currentSection = section;
+                break;
+            }
+        }
+
+        navItems.forEach(function (item) {
+            item.classList.remove('active');
+        });
+
+        if (currentSection) {
+            const activeLink = document.querySelector(`a[href="#${currentSection}"]`);
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
+        }
+    });
+</script>
+
+
+

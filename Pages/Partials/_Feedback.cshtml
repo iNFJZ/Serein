@@ -1,4 +1,5 @@
-﻿<div class="container">
+﻿@model Serein.Pages.Partials._FeedbackModel
+<div class="container" id="feedback-section">
     <div class="row">
         <div class="col-12">
             <div class="section_title">
@@ -10,66 +11,27 @@
         <div class="tab-pane fade show active" id="Men" role="tabpanel">
             <div class="row">
                 <div class="product_carousel product_column4 owl-carousel">
-                    <div class="col-lg-3">
-                        <article class="single_product">
-                            <figure>
-                                <div class="product_thumb">
-                                    <a href="#" class="primary_img">
-                                        <img src="images/testimonial/tes1.png" alt="">
-                                    </a>
-                                </div>
-                                <div class="testimonial_content">
-                                    <h4><a href="#">Andrew Garfield</a></h4>
-                                    <p>I absolutely love these candles! The scents are so unique and fill my home with warmth. I always get compliments from guests. Highly recommend!</p>
-                                </div>
-                            </figure>
-                        </article>
-                    </div>
-                    <div class="col-lg-3">
-                        <article class="single_product">
-                            <figure>
-                                <div class="product_thumb">
-                                    <a href="#" class="primary_img">
-                                        <img src="images/testimonial/test3.png" alt="">
-                                    </a>
-                                </div>
-                                <div class="testimonial_content">
-                                    <h4><a href="#">Vladimir Putin</a></h4>
-                                    <p>These candles are a game changer! The fragrances are rich and last a long time. I can’t imagine my evenings without them.</p>
-                                </div>
-                            </figure>
-                        </article>
-                    </div>
-                    <div class="col-lg-3">
-                        <article class="single_product">
-                            <figure>
-                                <div class="product_thumb">
-                                    <a href="#" class="primary_img">
-                                        <img src="images/testimonial/tes2.png" alt="">
-                                    </a>
-                                </div>
-                                <div class="testimonial_content">
-                                    <h4><a href="#">youngtobieedasick</a></h4>
-                                    <p>I’ve tried many candles, but none compare to these! The quality is exceptional, and they burn evenly. Perfect for creating a cozy atmosphere!</p>
-                                </div>
-                            </figure>
-                        </article>
-                    </div>
-                    <div class="col-lg-3">
-                        <article class="single_product">
-                            <figure>
-                                <div class="product_thumb">
-                                    <a href="#" class="primary_img">
-                                        <img src="images/testimonial/test4.png" alt="">
-                                    </a>
-                                </div>
-                                <div class="testimonial_content">
-                                    <h4><a href="#">Astralis Dev1ce</a></h4>
-                                    <p>I gifted these candles to my friends, and they all fell in love! The variety of scents is fantastic, and the packaging is beautiful.</p>
-                                </div>
-                            </figure>
-                        </article>
-                    </div>
+                    @if (Model?.Reviews != null && Model.Reviews.Any())
+                    {
+                        @foreach (var review in Model.Reviews)
+                        {
+                            <div class="col-lg-3">
+                                <article class="single_product">
+                                    <figure>
+                                        <div class="product_thumb">
+                                            <a href="#" class="primary_img">
+                                                <img src="@review.User?.AvatarUrl" alt="">
+                                            </a>
+                                        </div>
+                                        <div class="testimonial_content">
+                                            <h4><a href="#">@review.User?.FullName</a></h4>
+                                            <p>@review.Comment</p>
+                                        </div>
+                                    </figure>
+                                </article>
+                            </div>
+                        }
+                    }
                 </div>
             </div>
         </div>

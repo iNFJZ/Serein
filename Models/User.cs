@@ -41,6 +41,8 @@ public partial class User
 
     public virtual ICollection<Wishlist> Wishlists { get; set; } = new List<Wishlist>();
 
+    public virtual ICollection<Workshop> Workshops { get; set; } = new List<Workshop>();
+
     public static string HashPassword(string password)
     {
         return BCrypt.Net.BCrypt.HashPassword(password);

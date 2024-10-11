@@ -21,7 +21,7 @@
 <body>
     @await Html.PartialAsync("Partials/_Canvars")
 
-    @await Html.PartialAsync("Partials/_Header")
+    @await Html.PartialAsync("Partials/_Header", Model.HeaderModel)
 
     @await Html.PartialAsync("Partials/_Slider")
 
@@ -29,17 +29,17 @@
 
     @await Html.PartialAsync("Partials/_Product", Model.ProductModel)
 
-    @await Html.PartialAsync("Partials/_Giftbox")
+    @await Html.PartialAsync("Partials/_Giftbox", Model.GiftboxModel)
 
     @await Html.PartialAsync("Partials/_Banner")
 
-    @await Html.PartialAsync("Partials/_BestSeller")
+    @await Html.PartialAsync("Partials/_BestSeller", Model.BestSellerModel)
 
-    @await Html.PartialAsync("Partials/_Feedback")
+    @await Html.PartialAsync("Partials/_Feedback", Model.FeedbackModel)
 
     @await Html.PartialAsync("Partials/_Blog")
 
-    @await Html.PartialAsync("Partials/_Workshop")
+    @await Html.PartialAsync("Partials/_Workshop", Model.WorkshopModel)
 
     @await Html.PartialAsync("Partials/_Footer")
 

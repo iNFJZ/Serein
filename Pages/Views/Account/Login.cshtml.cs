@@ -62,7 +62,8 @@ namespace Serein.Pages.Views.Account
 
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, user.FullName ?? Email) 
+                new Claim(ClaimTypes.Name, user.FullName ?? Email),
+                new Claim(ClaimTypes.Email, user.Email)
             };
 
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
